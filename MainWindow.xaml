@@ -1,0 +1,1599 @@
+﻿<Window x:Class="SimpleEnigmaMachine.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SimpleEnigmaMachine"
+        mc:Ignorable="d"
+        Title="Enigma Machine" 
+        Height="600" Width="1200"
+        ResizeMode="NoResize" TabIndex="0"
+        KeyDown="MainWindow_KeyDown"
+        KeyUp="MainWindow_KeyUp">
+
+
+    <Grid
+        Background="#F0F0F0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Menu
+                Background="Transparent"
+                FontSize="15"
+                Padding="2,4">
+                <MenuItem Header="File">
+                    <MenuItem
+                        x:Name="ImportMenu"
+                        Header="Import .csv"
+                        Click="ImportMenu_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Close"/>
+                </MenuItem>
+                <MenuItem Header="Edit">
+                    <MenuItem
+                        x:Name="ReflectorModeMenu"
+                        Header="Reflector Mode"
+                        Click="ReflectorModeMenuItem_Click">
+                        <MenuItem.Style>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="IsCheckable" 
+                                        Value="True"/>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+
+            <Border
+                Grid.Row="1"
+                CornerRadius="1"
+                Background="WhiteSmoke"
+                Margin="20,10,20,20">
+                <TextBox
+                    x:Name="MessageTextBox"
+                    FontSize="24"
+                    FontWeight="DemiBold"
+                    Foreground="#333333"
+                    Padding="20"
+                    TextWrapping="Wrap"
+                    BorderThickness=".5"
+                    IsReadOnlyCaretVisible="True"
+                    IsReadOnly="True"
+                    CaretBrush="DeepSkyBlue"
+                    Background="Transparent"
+                    TextChanged="MessageTextBox_TextChanged">
+                    Your message displays here...
+                </TextBox>
+
+            </Border>
+        </Grid>
+
+        <Grid
+            Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Border 
+                CornerRadius="1"
+                Background="#8C8C8C"
+                Margin="20,50,20,30">
+                <TextBox
+                    x:Name="EncryptedTextBox"
+                    BorderThickness="0"
+                    FontSize="20"
+                    Foreground="#1C1C26"
+                    Background="Transparent"
+                    Padding="20"
+                    FontWeight="DemiBold"
+                    TextWrapping="Wrap"
+                    VerticalAlignment="Stretch"
+                    IsReadOnly="True"/>
+
+            </Border>
+
+        </Grid>
+
+        <!--Keyboard01-->
+        <Grid Grid.Row="1" Margin="3,0,-3,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!--`12345-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".9*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.1*"/>
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.Column="0"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="5,6,2,3">
+                    <Grid>
+                        <Label x:Name="LabelGrave"/>
+                        <StackPanel>
+                            <Label
+                                Content="~"
+                                VerticalAlignment="Top"
+                                FontSize="11"
+                                Margin="0,-5,0,0"/>
+                            <Label 
+                                Content="`"
+                                Margin="0,-6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Column="1"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,6,2,3">
+                    <Grid>
+                        <Label x:Name="LabelOne"/>
+                        <StackPanel>
+                            <Label
+                                Content="!"
+                                VerticalAlignment="Top"
+                                FontSize="11"
+                                Margin="0,-5,0,0"/>
+                            <Label 
+                                Content="1"
+                                Margin="0,-6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Column="2"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,6,2,3">
+                    <Grid>
+                        <Label x:Name="LabelTwo"/>
+                        <StackPanel>
+                            <Label
+                                Content="@"
+                                VerticalAlignment="Top"
+                                FontSize="11"
+                                Margin="0,-5,0,0"/>
+                            <Label          
+                                Content="2"
+                                Margin="0,-6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Column="3"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,6,2,3">
+                    <Grid>
+                        <Label x:Name="LabelThree"/>
+                        <StackPanel>
+                            <Label
+                                Content="#"
+                                VerticalAlignment="Top"
+                                FontSize="11"
+                                Margin="0,-5,0,0"/>
+                            <Label
+                                Content="3"
+                                Margin="0,-6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Column="4"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,6,2,3">
+                    <Grid>
+                        <Label x:Name="LabelFour"/>
+                        <StackPanel>
+                            <Label
+                                Content="$"
+                                VerticalAlignment="Top"
+                                FontSize="11"
+                                Margin="0,-5,0,0"/>
+                            <Label 
+                                Content="4"
+                                Margin="0,-6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Column="5"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,6,2,3">
+                    <Grid>
+                        <Label x:Name="LabelFive"/>
+                        <StackPanel>
+                            <Label
+                                Content="%"
+                                VerticalAlignment="Top"
+                                FontSize="11"
+                                Margin="0,-5,0,0"/>
+                            <Label
+                                Content="5"
+                                Margin="0,-6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Column="6"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,6,2,3">
+                    <Grid>
+                        <Label x:Name="LabelSix"/>
+                        <StackPanel>
+                            <Label
+                                x:Name="LabelCaret"
+                                Content="^"
+                                VerticalAlignment="Top"
+                                FontSize="11"
+                                Margin="0,-5,0,0"/>
+                            <Label 
+                                Content="6"
+                                Margin="0,-6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Column="7"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,6,2,3">
+                    <Grid>
+                        <Label x:Name="LabelSeven"/>
+                        <StackPanel>
+                            <Label
+                                Content="&amp;"
+                                VerticalAlignment="Top"
+                                FontSize="11"
+                                Margin="0,-5,0,0"/>
+                            <Label
+                                Content="7"
+                                Margin="0,-6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Column="8"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,6,2,3">
+                    <Grid>
+                        <Label x:Name="LabelEight"/>
+                        <StackPanel>
+                            <Label
+                                Content="*"
+                                VerticalAlignment="Top"
+                                FontSize="11"
+                                Margin="0,-5,0,0"/>
+                            <Label 
+                                Content="8"
+                                Margin="0,-6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Column="9"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,6,2,3">
+                    <Grid>
+                        <Label x:Name="LabelNine"/>
+                        <StackPanel>
+                            <Label
+                            Content="("
+                            VerticalAlignment="Top"
+                            FontSize="11"
+                            Margin="0,-5,0,0"/>
+                            <Label 
+                            Content="9"
+                            Margin="0,-6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Column="10"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,6,2,3">
+                    <Grid>
+                        <Label x:Name="LabelZero"/>
+                        <StackPanel>
+                            <Label
+                                Content=")"
+                                VerticalAlignment="Top"
+                                FontSize="11"
+                                Margin="0,-5,0,0"/>
+                            <Label 
+                                Content="0"
+                                Margin="0,-6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Column="11"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,6,2,3">
+                    <Grid>
+                        <Label x:Name="LabelMinus"/>
+                        <StackPanel>
+                            <Label
+                                Content="_"
+                                VerticalAlignment="Top"
+                                FontSize="11"
+                                Margin="0,-5,0,0"/>
+                            <Label 
+                                Content="-"
+                                Margin="0,-6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Column="12"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,6,2,3">
+                    <Grid>
+                        <Label x:Name="LabelEquals"/>
+                        <StackPanel>
+                            <Label
+                                Content="+"
+                                VerticalAlignment="Top"
+                                FontSize="11"
+                                Margin="0,-5,0,0"/>
+                            <Label 
+                                Content="="
+                                Margin="0,-6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!--Qwerty-->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.1*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width=".9*"/>
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.Column="1"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,2,2,6">
+                    <Label 
+                        x:Name="LabelQ"
+                        Content="Q"/>
+                </Border>
+                <Border
+                    Grid.Column="2"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,2,2,6">
+                    <Label 
+                        x:Name="LabelW"
+                        Content="W"/>
+                </Border>
+                <Border
+                    Grid.Column="3"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,2,2,6">
+                    <Label 
+                        x:Name="LabelE"
+                        Content="E"/>
+                </Border>
+                <Border
+                    Grid.Column="4"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,2,2,6">
+                    <Label 
+                        x:Name="LabelR"
+                        Content="R"/>
+                </Border>
+                <Border
+                    Grid.Column="5"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,2,2,6">
+                    <Label 
+                        x:Name="LabelT"
+                        Content="T"/>
+                </Border>
+                <Border
+                    Grid.Column="6"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,2,2,6">
+                    <Label 
+                        x:Name="LabelY"
+                        Content="Y"/>
+                </Border>
+                <Border
+                    Grid.Column="7"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,2,2,6">
+                    <Label 
+                        x:Name="LabelU"
+                        Content="U"/>
+                </Border>
+                <Border
+                    Grid.Column="8"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,2,2,6">
+                    <Label 
+                        x:Name="LabelI"
+                        Content="I"/>
+                </Border>
+                <Border
+                    Grid.Column="9"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,2,2,6">
+                    <Label 
+                        x:Name="LabelO"
+                        Content="O"/>
+                </Border>
+                <Border
+                    Grid.Column="10"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,2,2,6">
+                    <Label 
+                        x:Name="LabelP"
+                        Content="P"/>
+                </Border>
+                <Border
+                    Grid.Column="11"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,2,2,6">
+                    <Label 
+                        x:Name="LabelOpeningBracket"
+                        Content="["/>
+                </Border>
+                <Border
+                    Grid.Column="12"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,2,2,6">
+                    <Label 
+                        x:Name="LabelClosingBracket"
+                        Content="]"/>
+                </Border>
+                <Border
+                    Grid.Column="13"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,2,0,6">
+                    <Label 
+                        x:Name="LabelBackSlash"
+                        Content="\"/>
+                </Border>
+            </Grid>
+
+            <!--Asdfg-->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.6*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width=".4*"/>
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.Column="0"
+                    CornerRadius="1"
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="5,-2,2,8">
+                    <Label 
+                        x:Name="LabelCapsLk"
+                        Content="CapsLk"/>
+                </Border>
+                <Border
+                    Grid.Column="1"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-2,2,8">
+                    <Label 
+                        x:Name="LabelA"
+                        Content="A"/>
+                </Border>
+                <Border
+                    Grid.Column="2"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-2,2,8">
+                    <Label 
+                        x:Name="LabelS"
+                        Content="S"/>
+                </Border>
+                <Border
+                    Grid.Column="3"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-2,2,8">
+                    <Label 
+                        x:Name="LabelD"
+                        Content="D"/>
+                </Border>
+                <Border
+                    Grid.Column="4"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-2,2,8">
+                    <Label 
+                        x:Name="LabelF"
+                        Content="F"/>
+                </Border>
+                <Border
+                    Grid.Column="5"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-2,2,8">
+                    <Label 
+                        x:Name="LabelG"
+                        Content="G"/>
+                </Border>
+                <Border
+                    Grid.Column="6"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-2,2,8">
+                    <Label 
+                        x:Name="LabelH"
+                        Content="H"/>
+                </Border>
+                <Border
+                    Grid.Column="7"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-2,2,8">
+                    <Label 
+                        x:Name="LabelJ"
+                        Content="J"/>
+                </Border>
+                <Border
+                    Grid.Column="8"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-2,2,8">
+                    <Label 
+                        x:Name="LabelK"
+                        Content="K"/>
+                </Border>
+                <Border
+                    Grid.Column="9"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-2,2,8">
+                    <Label 
+                        x:Name="LabelL"
+                        Content="L"/>
+                </Border>
+                <Border
+                    Grid.Column="10"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-2,2,8">
+                    <Label 
+                        x:Name="LabelSemicolon"
+                        Content=";"/>
+                </Border>
+                <Border
+                    Grid.Column="11"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-2,2,8">
+                    <Label 
+                        x:Name="LabelSingleQuote"
+                        Content="'"/>
+                </Border>
+            </Grid>
+
+            <!--Zxcvb-->
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0"/>
+                    <ColumnDefinition Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.Column="0"
+                    CornerRadius="1"
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="5,-4,2,10">
+                    <Label 
+                        x:Name="LabelShift"
+                        Content="Shift"/>
+                </Border>
+                <Border
+                    Grid.Column="1"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-4,2,10">
+                    <Label 
+                        x:Name="LabelZ"
+                        Content="Z"/>
+                </Border>
+                <Border
+                    Grid.Column="2"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-4,2,10">
+                    <Label 
+                        x:Name="LabelX"
+                        Content="X"/>
+                </Border>
+                <Border
+                    Grid.Column="3"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-4,2,10">
+                    <Label 
+                        x:Name="LabelC"
+                        Content="C"/>
+                </Border>
+                <Border
+                    Grid.Column="4"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-4,2,10">
+                    <Label 
+                        x:Name="LabelV"
+                        Content="V"/>
+                </Border>
+                <Border
+                    Grid.Column="5"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-4,2,10">
+                    <Label 
+                        x:Name="LabelB"
+                        Content="B"/>
+                </Border>
+                <Border
+                    Grid.Column="6"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-4,2,10">
+                    <Label 
+                        x:Name="LabelN"
+                        Content="N"/>
+                </Border>
+                <Border
+                    Grid.Column="7"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-4,2,10">
+                    <Label 
+                        x:Name="LabelM"
+                        Content="M"/>
+                </Border>
+                <Border
+                    Grid.Column="8"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-4,2,10">
+                    <Label 
+                        x:Name="LabelComma"
+                        Content=","/>
+                </Border>
+                <Border
+                    Grid.Column="9"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-4,2,10">
+                    <Label 
+                        x:Name="LabelDot"
+                        Content="."/>
+                </Border>
+                <Border
+                    Grid.Column="10"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-4,2,10">
+                    <Label 
+                        x:Name="LabelSlash"
+                        Content="/"/>
+                </Border>
+            </Grid>
+
+            <!--Space-->
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.Column="4"
+                    Grid.ColumnSpan="5"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-6,2,12">
+                    <Label 
+                        x:Name="LabelSpace"
+                        Content="Space"/>
+                </Border>
+                <Border
+                    Grid.Column="9"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-6,2,12">
+                    <Label 
+                        x:Name="LabelAlt"
+                        Content="Alt"
+                        IsEnabled="False"/>
+                </Border>
+                <Border
+                    Grid.Column="10"
+                    CornerRadius="1"
+                     
+                    BorderBrush="LightSlateGray"
+                    Background="LightGray"
+                    Margin="2,-6,2,12">
+                    <Label 
+                        x:Name="LabelCtrl"
+                        Content="Ctrl"
+                        IsEnabled="False"/>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--Separator-->
+        <Grid
+            Grid.Column="1"
+            Grid.RowSpan="2">
+            <Line
+            X1="4" Y1="0" 
+            X2="4" Y2="500" 
+            Stroke="LightGray" 
+            StrokeThickness=".8"
+            Margin="16,24,16,0"/>
+        </Grid>
+
+        <!--Keyboard02-->
+        <Grid Grid.Row="1" Grid.Column="2" Margin="-3,0,8,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!--`12345-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".9*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.1*"/>
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.Column="0"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="5,6,2,3">
+                    <Label 
+                        x:Name="Label1Grave"
+                        Foreground="WhiteSmoke" 
+                        Content="`"/>
+                </Border>
+                <Border
+                    Grid.Column="1"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,6,2,3">
+                    <Label 
+                        x:Name="Label1One"
+                        Foreground="WhiteSmoke" 
+                        Content="1"/>
+                </Border>
+                <Border
+                    Grid.Column="2"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,6,2,3">
+                    <Label 
+                        x:Name="Label1Two"
+                        Foreground="WhiteSmoke" 
+                        Content="2"/>
+                </Border>
+                <Border
+                    Grid.Column="3"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,6,2,3">
+                    <Label 
+                        x:Name="Label1Three"
+                        Foreground="WhiteSmoke" 
+                        Content="3"/>
+                </Border>
+                <Border
+                    Grid.Column="4"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,6,2,3">
+                    <Label 
+                        x:Name="Label1Four"
+                        Foreground="WhiteSmoke" 
+                        Content="4"/>
+                </Border>
+                <Border
+                    Grid.Column="5"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,6,2,3">
+                    <Label 
+                        x:Name="Label1Five"
+                        Foreground="WhiteSmoke" 
+                        Content="5"/>
+                </Border>
+                <Border
+                    Grid.Column="6"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,6,2,3">
+                    <Label 
+                        x:Name="Label1Six" 
+                        Foreground="WhiteSmoke" 
+                        Content="6"/>
+                </Border>
+                <Border
+                    Grid.Column="7"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,6,2,3">
+                    <Label 
+                        x:Name="Label1Seven"
+                        Foreground="WhiteSmoke" 
+                        Content="7"/>
+                </Border>
+                <Border
+                    Grid.Column="8"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,6,2,3">
+                    <Label 
+                        x:Name="Label1Eight" 
+                        Foreground="WhiteSmoke" 
+                        Content="8"/>
+                </Border>
+                <Border
+                    Grid.Column="9"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,6,2,3">
+                    <Label 
+                        Foreground="WhiteSmoke" 
+                        Content="9"/>
+                </Border>
+                <Border
+                    Grid.Column="10"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,6,2,3">
+                    <Label Foreground="WhiteSmoke" Content="0"/>
+                </Border>
+                <Border
+                    Grid.Column="11"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,6,2,3">
+                    <Label Foreground="WhiteSmoke" Content="-"/>
+                </Border>
+                <Border
+                    Grid.Column="12"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,6,2,3">
+                    <Label Foreground="WhiteSmoke" Content="="/>
+                </Border>
+            </Grid>
+
+            <!--Qwerty-->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.1*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width=".9*"/>
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.Column="0">
+                    <Label Foreground="WhiteSmoke" Content=""/>
+                </Border>
+                <Border
+                    Grid.Column="1"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,2,2,6">
+                    <Label Foreground="WhiteSmoke" Content="Q"/>
+                </Border>
+                <Border
+                    Grid.Column="2"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,2,2,6">
+                    <Label Foreground="WhiteSmoke" Content="W"/>
+                </Border>
+                <Border
+                    Grid.Column="3"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,2,2,6">
+                    <Label Foreground="WhiteSmoke" Content="E"/>
+                </Border>
+                <Border
+                    Grid.Column="4"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,2,2,6">
+                    <Label Foreground="WhiteSmoke" Content="R"/>
+                </Border>
+                <Border
+                    Grid.Column="5"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,2,2,6">
+                    <Label Foreground="WhiteSmoke" Content="T"/>
+                </Border>
+                <Border
+                    Grid.Column="6"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,2,2,6">
+                    <Label Foreground="WhiteSmoke" Content="Y"/>
+                </Border>
+                <Border
+                    Grid.Column="7"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,2,2,6">
+                    <Label Foreground="WhiteSmoke" Content="U"/>
+                </Border>
+                <Border
+                    Grid.Column="8"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,2,2,6">
+                    <Label Foreground="WhiteSmoke" Content="I"/>
+                </Border>
+                <Border
+                    Grid.Column="9"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,2,2,6">
+                    <Label Foreground="WhiteSmoke" Content="O"/>
+                </Border>
+                <Border
+                    Grid.Column="10"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,2,2,6">
+                    <Label Foreground="WhiteSmoke" Content="P"/>
+                </Border>
+                <Border
+                    Grid.Column="11"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,2,2,6">
+                    <Label Foreground="WhiteSmoke" Content="["/>
+                </Border>
+                <Border
+                    Grid.Column="12"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,2,2,6">
+                    <Label Foreground="WhiteSmoke" Content="]"/>
+                </Border>
+                <Border
+                    Grid.Column="13"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,2,0,6">
+                    <Label Foreground="WhiteSmoke" Content="|"/>
+                </Border>
+            </Grid>
+
+            <!--Asdfg-->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.6*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width=".4*"/>
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.Column="0"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="5,-2,2,8">
+                    <Label 
+                        Content="CapsLk"
+                        IsEnabled="False"/>
+                </Border>
+                <Border
+                    Grid.Column="1"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-2,2,8">
+                    <Label Foreground="WhiteSmoke" Content="A"/>
+                </Border>
+                <Border
+                    Grid.Column="2"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-2,2,8">
+                    <Label Foreground="WhiteSmoke" Content="S"/>
+                </Border>
+                <Border
+                    Grid.Column="3"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-2,2,8">
+                    <Label Foreground="WhiteSmoke" Content="D"/>
+                </Border>
+                <Border
+                    Grid.Column="4"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-2,2,8">
+                    <Label Foreground="WhiteSmoke" Content="F"/>
+                </Border>
+                <Border
+                    Grid.Column="5"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-2,2,8">
+                    <Label Foreground="WhiteSmoke" Content="G"/>
+                </Border>
+                <Border
+                    Grid.Column="6"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-2,2,8">
+                    <Label Foreground="WhiteSmoke" Content="H"/>
+                </Border>
+                <Border
+                    Grid.Column="7"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-2,2,8">
+                    <Label Foreground="WhiteSmoke" Content="J"/>
+                </Border>
+                <Border
+                    Grid.Column="8"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-2,2,8">
+                    <Label Foreground="WhiteSmoke" Content="K"/>
+                </Border>
+                <Border
+                    Grid.Column="9"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-2,2,8">
+                    <Label Foreground="WhiteSmoke" Content="L"/>
+                </Border>
+                <Border
+                    Grid.Column="10"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-2,2,8">
+                    <Label Foreground="WhiteSmoke" Content=";"/>
+                </Border>
+                <Border
+                    Grid.Column="11"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-2,2,8">
+                    <Label Foreground="WhiteSmoke" Content="'"/>
+                </Border>
+            </Grid>
+
+            <!--Zxcvb-->
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0"/>
+                    <ColumnDefinition Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.Column="0"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="5,-4,2,10">
+                    <Label 
+                        Content="Shift"
+                        IsEnabled="False"/>
+                </Border>
+                <Border
+                    Grid.Column="1"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-4,2,10">
+                    <Label Foreground="WhiteSmoke" Content="Z"/>
+                </Border>
+                <Border
+                    Grid.Column="2"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-4,2,10">
+                    <Label Foreground="WhiteSmoke" Content="X"/>
+                </Border>
+                <Border
+                    Grid.Column="3"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-4,2,10">
+                    <Label Foreground="WhiteSmoke" Content="C"/>
+                </Border>
+                <Border
+                    Grid.Column="4"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-4,2,10">
+                    <Label Foreground="WhiteSmoke" Content="V"/>
+                </Border>
+                <Border
+                    Grid.Column="5"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-4,2,10">
+                    <Label Foreground="WhiteSmoke" Content="B"/>
+                </Border>
+                <Border
+                    Grid.Column="6"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-4,2,10">
+                    <Label Foreground="WhiteSmoke" Content="N"/>
+                </Border>
+                <Border
+                    Grid.Column="7"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-4,2,10">
+                    <Label Foreground="WhiteSmoke" Content="M"/>
+                </Border>
+                <Border
+                    Grid.Column="8"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-4,2,10">
+                    <Label Foreground="WhiteSmoke" Content=","/>
+                </Border>
+                <Border
+                    Grid.Column="9"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-4,2,10">
+                    <Label Foreground="WhiteSmoke" Content="."/>
+                </Border>
+                <Border
+                    Grid.Column="10"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-4,2,10">
+                    <Label Foreground="WhiteSmoke" Content="/"/>
+                </Border>
+            </Grid>
+
+            <!--Space-->
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.Column="4"
+                    Grid.ColumnSpan="5"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-6,2,12">
+                    <Label Foreground="WhiteSmoke" Content="Space"/>
+                </Border>
+                <Border
+                    Grid.Column="9"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-6,2,12">
+                    <Label 
+                        Content="Alt"
+                        IsEnabled="False"/>
+                </Border>
+                <Border
+                    Grid.Column="10"
+                    CornerRadius="1"
+                    BorderThickness="1"
+                    BorderBrush="WhiteSmoke"
+                    Background="DimGray"
+                    Margin="2,-6,2,12">
+                    <Label 
+                        Content="Ctrl"
+                        IsEnabled="False"/>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <Grid
+            Grid.Row="3"
+            Grid.ColumnSpan="3"
+            Background="LightGray"
+            Margin="0,20,0,0">
+            <Border
+                BorderThickness="1"
+                BorderBrush="DimGray">
+                <Grid
+                Height="25">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="20*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        x:Name="MachineModeTextBlock"
+                        Text="Machine Mode: Encrypt"
+                        FontSize="13"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"/>
+                    <TextBlock
+                        x:Name="FilePathTextBlock"
+                        Text="File Path: "
+                        Grid.Column="1"
+                        FontSize="13"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center" Height="17"/>
+                    <TextBlock
+                        x:Name="RingCountTextBlock"
+                        Grid.Column="2"
+                        FontSize="13"
+                        VerticalAlignment="Center" Height="17"/>
+                </Grid>
+
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
